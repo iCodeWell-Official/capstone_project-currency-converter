@@ -1,10 +1,29 @@
 import { useState } from "react";
+import { useEffect } from "react";
 
 const CurrencyConverter = () => {
   const [currencies, setCurrencies] = useState([]);
   const [amount, setAmount] = useState(1);
 
   // Currencies : https://api.frankfurter.dev/v1/currencies
+  const fetchCurrencies = async () => {
+    try {
+      const res = await fetch("https://api.frankfurter.dev/v1/currencies");
+      const data = await res.json();
+
+      setCurrencies(data);
+    } catch (error) {
+      console.error("Error fetching", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCurrencies();
+  }, []);
+
+  console.log(currencies);
+  
+
   // Conversion : https://api.frankfurter.dev/v1/latest?base=CHF&symbols=EUR
   return (
     <div className="max-w-xl mx-auto my-10 p-5 bg-white rounded-lg shadow-md">
