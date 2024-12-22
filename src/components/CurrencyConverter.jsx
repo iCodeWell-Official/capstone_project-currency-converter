@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import CurrencyDropdown from "./CurrencyDropdown";
+import { HiArrowsRightLeft } from "react-icons/hi2";
 
 const CurrencyConverter = () => {
   const [currencies, setCurrencies] = useState([]);
@@ -35,6 +36,11 @@ const CurrencyConverter = () => {
     // add to favorite
   };
 
+  const swapCurrencies = () => {
+    setFromCurrency(toCurrency)
+    setToCurrency(fromCurrency)
+  }
+
   // Conversion : https://api.frankfurter.dev/v1/latest?base=CHF&symbols=EUR
   return (
     <div className="max-w-xl mx-auto my-10 p-5 bg-white rounded-lg shadow-md">
@@ -42,7 +48,7 @@ const CurrencyConverter = () => {
         Currency Converter
       </h2>
 
-      <div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
         <CurrencyDropdown
           currencies={currencies}
           title="From:"
@@ -51,6 +57,11 @@ const CurrencyConverter = () => {
           handleFavorite={handleFavorite}
           />
         {/* swap button */}
+        <div className="flex justify-center -mb-5 sm:mb-0">
+          <button onClick={swapCurrencies} className="p-2 bg-gray-200 rounded-full cursor-pointer hover:bg-gray-300">
+            <HiArrowsRightLeft className="text-xl text-gray-700" />
+          </button>
+        </div>
         <CurrencyDropdown
           currencies={currencies}
           title="To:"
